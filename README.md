@@ -1,70 +1,85 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Collision Balls
 
-## Available Scripts
+A high-performance, dynamic physics battle simulator built with **React** and the **Canvas API**. Watch different types of balls collide, fight, and use their unique abilities to dominate the arena!
 
-In the project directory, you can run:
+---
 
-### `npm start`
+##  Game Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Ball Types & Unique Abilities
+Each ball has distinct stats and custom collision logic that dictates its combat style:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+| Type | HP | Damage | Special Ability |
+| :--- | :--- | :--- | :--- |
+| **Normal** | 100 | 10 | Standard balanced combatant. |
+| **Tank** | 200 | 5 | High HP; survives long attrition battles. |
+| **Damage** | 50 | 20 | Glass cannon; high lethality but fragile. |
+| **Scale** | 100 | 1+ | **Growth:** Base damage increases by +1 on every hit. |
+| **Percent** | 100 | 0 | **Slayer:** Deals damage equal to 10% of target's MAX HP. |
+| **Speed** | 100 | ~10 | **Momentum:** Damage scales with velocity (faster = more dmg). |
 
-### `npm test`
+###  Physics Engine
+The engine uses **custom vector mathematics** to handle high-speed interactions and realistic physical properties at a smooth 60 FPS:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* **Momentum Conservation:** Calculates post-collision velocities using the conservation of momentum principle:
+    $$m_1\mathbf{v}_{1i} + m_2\mathbf{v}_{2i} = m_1\mathbf{v}_{1f} + m_2\mathbf{v}_{2f}$$
 
-### `npm run build`
+* **Elastic Collision Response:** Kinetic energy is preserved during bounces, ensuring the battle remains dynamic and high-energy.
+* **Border Detection:** Precise boundary checking ensures balls bounce off the canvas edges accurately.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Technical Implementation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Built With
+* **React** - UI framework and game loop management.
+* **Canvas API** - High-performance rendering and animations.
+* **JavaScript** - Custom physics calculations and entity logic.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🚀 Getting Started
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Prerequisites
+* **Node.js** (v14 or higher)
+* **npm**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Installation
+1.  **Clone the repository**
+    ```bash
+    git clone [https://github.com/Mattisiek/Collision-Balls.git](https://github.com/Mattisiek/Collision-Balls.git)
+    cd collision_balls
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2.  **Install dependencies**
+    ```bash
+    npm install    ```
 
-## Learn More
+3.  **Start the development server**
+    ```bash
+    npm start
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4.  **View the Battle**
+    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Future Enhancements
+- [ ] **Team Battles:** Balls are split to form a team.
+- [ ] **Power-ups:** Randomly spawning items (Shields, Heals, Speed Boosts).
+- [ ] **More types:** More advanced types of balls
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Contributing
+1.  Fork the repository.
+2.  Create your feature branch (`git checkout -b feature/AmazingFeature`).
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4.  Push to the branch (`git push origin feature/AmazingFeature`).
+5.  Open a **Pull Request**.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+**Watch the battle unfold!** Every run is unique due to randomized initial trajectories and complex collision chains.
