@@ -3,11 +3,17 @@ import React, { useRef, useEffect, useState } from 'react';
 const W = 800;
 const H = 600;
 
-const BallGame = () => {
+let gameSpeed = "normal";
+
+
+const BallGame = ({ initialBalls = [] }) => {
+    const [ballsToAdd] = useState(initialBalls);
     const hasInitialized = useRef(false);
     let numberOfBalls = 0;
     const canvasRef = useRef(null);
     const [balls, setBalls] = useState([]);
+    let [gameOver, setGameOver] = useState(false);
+    let [winner, setWinner] = useState(null);
 
     function dist(xa, ya, xb, yb) {
         return Math.sqrt((xa - xb) * (xa - xb) + (ya - yb) * (ya - yb));
@@ -73,6 +79,7 @@ const BallGame = () => {
             type: type,
             radius: 50,
             team: teamOfBall = -1 ? numberOfBalls : teamOfBall,
+            colision: null,
         };
 
         if (type === 'normal') {
@@ -100,7 +107,7 @@ const BallGame = () => {
             params.hp = 100;
             params.dmg = 10;
             params.colision = (ball, otherBall) => { otherBall.hp = otherBall.hp - ball.dmg * ball.speed / baseSpeed + ball.dmg; };
-        } else {
+        }else {
             alert("AAA");
         }
 
@@ -149,22 +156,42 @@ const BallGame = () => {
         }
     }
 
+    //*
     useEffect(() => {
         if (!hasInitialized.current) {
             hasInitialized.current = true;
-            add_ball("speed");
-            add_ball("tank");
-            add_ball("percent");
-            add_ball("scale");
+            for (const ball of ballsToAdd){
+                add_ball(ball);
+            }
         }
-    }, []);
+    }, [add_ball, ballsToAdd]);
+    //*/
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-
+        
+        if (gameOver){
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.fillRect(0, 0, W, H);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '48px Arial';
+            const draw = winner ? false : true;
+            const endMessage = draw ? `Draw` : `Winner: ${winner}`;
+            ctx.textAlign = 'center';
+            ctx.fillText('GAME OVER', W/2, H/2 - 30);
+            ctx.fillText(endMessage, W/2, H/2 + 30);
+            return;
+        }
         const interval = setInterval(() => {
             setBalls(prevBalls => {
+                if (prevBalls.length <= 1 && !gameOver){
+                    if (prevBalls.length === 1){
+                        setWinner(prevBalls[0].type);
+                        prevBalls[0].hp = -1;
+                    }
+                    setGameOver(true);
+                }
                 const newBalls = [...prevBalls];
 
                 for (let i = 0; i < newBalls.length; i++) {
@@ -202,15 +229,18 @@ const BallGame = () => {
 
                 ctx.fillStyle = '#ffffff';
                 ctx.font = '30px Arial';
-                ctx.fillText(Math.round(ball.hp).toString(), ball.x - 25, ball.y - 15);
+                ctx.textAlign = 'center';
+
+                ctx.fillText(Math.round(ball.hp).toString(), ball.x, ball.y - 15);
 
                 ctx.font = '20px Arial';
-                ctx.fillText(ball.type.toString(), ball.x - 20, ball.y + 20);
+                ctx.fillText(ball.type.toString(), ball.x, ball.y + 20);
             });
-        }, 1000 / 60);
+        
+        }, 1000 / ( gameSpeed === "normal" ? 60 : 10000));
 
         return () => clearInterval(interval);
-    }, [balls]);
+    }, [balls, gameOver]);
 
     return (
         <div>
