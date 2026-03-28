@@ -7,7 +7,8 @@ const ballTypes = [
     { value: 'dmg', label: 'Damage Ball', hp: 50, dmg: 20, descr: "" },
     { value: 'scale', label: 'Scale Ball', hp: 100, dmg: 1, descr: "" },
     { value: 'percent', label: 'Percent Ball', hp: 100, dmg: 0, descr: "" },
-    { value: 'speed', label: 'Speed Ball', hp: 100, dmg: 10, descr: "" }
+    { value: 'speed', label: 'Speed Ball', hp: 100, dmg: 10, descr: "" },
+    { value: 'duplicate', label: 'Duplicate Ball', hp: 100, dmg: 5, descr: "" },
   ];
   
 let balls = [];
